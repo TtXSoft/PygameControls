@@ -28,8 +28,9 @@ class Input:
         if evt.type==pygame.KEYDOWN:
             if self.write==True and self.chars<self.maxchars:
                 self.buffer = self.buffer + chr(evt.key)
-                if evt.key==pygame.K_BACKSPACE:
-                    self.buffer = self.buffer[:-2]
+            if self.write==True and evt.key==pygame.K_BACKSPACE:
+                self.buffer = self.buffer[:-2]
+                self.chars = self.chars - 2
     def click_event(self,evt,mousepos):
         if evt.type==pygame.MOUSEBUTTONDOWN:
             if mousepos[0]>=self.posX and mousepos[0]<=self.posX+self.width and mousepos[1]>=self.posY and mousepos[1]<=self.posY+self.height:
@@ -51,7 +52,7 @@ class TitledInput:
         self.info_text = inf
         self.chars = 0
     def show(self,scr):
-        self.info = self.fnt.render(self.info_text,True,self.textColor)
+        self.info = self.font.render(self.info_text,True,self.textColor)
         pygame.draw.rect(scr,self.bgColor,(self.posX,self.posY,self.width,self.height))
         self.text = self.font.render(self.buffer,True,self.textColor)
         scr.blit(self.info,(self.posX,self.posY-35))
@@ -61,11 +62,12 @@ class TitledInput:
     def key_event(self,evt):
         if evt.type==pygame.KEYDOWN:
             if self.write==True and self.chars<self.maxchars:
-                if not evt.key==pygame.RETURN:
+                if not evt.key==pygame.K_RETURN:
                     self.buffer = self.buffer + chr(evt.key)
                     self.chars = self.chars + 1
-                if evt.key==pygame.K_BACKSPACE:
-                    self.buffer = self.buffer[:-2]
+            if self.write==True and evt.key==pygame.K_BACKSPACE:
+                 self.buffer = self.buffer[:-2]
+                 self.chars = self.chars - 2
     def click_event(self,evt,mousepos):
         if evt.type==pygame.MOUSEBUTTONDOWN:
             if mousepos[0]>=self.posX and mousepos[0]<=self.posX+self.width and mousepos[1]>=self.posY and mousepos[1]<=self.posY+self.height:
